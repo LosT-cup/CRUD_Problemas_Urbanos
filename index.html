@@ -4,190 +4,311 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Problemas Urbanos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f3f5f9; --card: #fff; --text: #1f2937; --muted: #6b7280; --border: #e5e7eb;
-    --primary: #0f766e; --primary-h: #115e59;
-    --aberto: #dc2626; --aberto-bg: #fee2e2;
-    --analise: #b45309; --analise-bg: #fef3c7;
-    --resolvido: #15803d; --resolvido-bg: #dcfce7;
+    --bg: #eef2f6;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --primary: #0d9488;
+    --primary-d: #0f766e;
+    --primary-soft: #ccfbf1;
+    --dark: #0b2530;
+    --aberto: #e11d48;   --aberto-bg: #ffe4e6;
+    --analise: #d97706;  --analise-bg: #fef3c7;
+    --resolvido: #059669; --resolvido-bg: #d1fae5;
+    --up: #0284c7; --up-bg: #e0f2fe;
+    --down: #7c3aed; --down-bg: #ede9fe;
+    --shadow: 0 1px 2px rgba(15,23,42,.04), 0 8px 24px rgba(15,23,42,.06);
+    --radius: 16px;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-         background: var(--bg); color: var(--text); }
-  header { background: var(--primary); color: #fff; padding: 22px 16px; }
-  header .in { max-width: 1000px; margin: 0 auto; }
-  header h1 { margin: 0; font-size: 1.6rem; }
-  header p { margin: 4px 0 0; opacity: .85; }
-  .container { max-width: 1000px; margin: 0 auto; padding: 20px 16px 40px; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased;
+  }
 
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
-  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
-  .stat .n { font-size: 1.6rem; font-weight: 700; }
-  .stat .l { font-size: .8rem; color: var(--muted); }
-  .stat.aberto .n { color: var(--aberto); }
-  .stat.analise .n { color: var(--analise); }
-  .stat.resolvido .n { color: var(--resolvido); }
+  /* ===== Cabeçalho ===== */
+  header {
+    background:
+      radial-gradient(circle at 85% -20%, rgba(45,212,191,.35), transparent 45%),
+      radial-gradient(circle at 10% 120%, rgba(13,148,136,.5), transparent 50%),
+      var(--dark);
+    color: #fff; padding: 28px 16px 92px;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .topo { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .marca { display: flex; align-items: center; gap: 14px; }
+  .logo {
+    width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
+    background: linear-gradient(135deg, #2dd4bf, #0d9488); font-size: 24px;
+    box-shadow: 0 6px 20px rgba(45,212,191,.35);
+  }
+  .marca h1 { margin: 0; font-size: 1.55rem; font-weight: 800; letter-spacing: -.02em; }
+  .marca p { margin: 2px 0 0; color: #99f6e4; font-size: .92rem; }
+  .auth { display: flex; align-items: center; gap: 10px; font-size: .88rem; }
+  .auth-info {
+    background: rgba(255,255,255,.1); padding: 6px 12px; border-radius: 999px; color: #ccfbf1;
+  }
+  .auth-info:empty { display: none; }
 
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-          padding: 20px; margin-bottom: 20px; }
-  .card h2 { margin: 0 0 16px; font-size: 1.1rem; }
-  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  /* ===== Estatísticas ===== */
+  .stats {
+    max-width: 1240px; margin: -64px auto 24px; padding: 0 16px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .stat {
+    background: var(--card); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .stat .ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; flex-shrink: 0; }
+  .stat .n { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+  .stat .l { font-size: .8rem; color: var(--muted); margin-top: 4px; }
+  .stat.total .ic { background: var(--primary-soft); }
+  .stat.aberto .ic { background: var(--aberto-bg); }
+  .stat.analise .ic { background: var(--analise-bg); }
+  .stat.resolvido .ic { background: var(--resolvido-bg); }
+
+  /* ===== Layout em duas colunas ===== */
+  .layout {
+    max-width: 1240px; margin: 0 auto; padding: 0 16px 48px;
+    display: grid; grid-template-columns: 400px 1fr; gap: 24px; align-items: start;
+  }
+  .coluna-esq { position: sticky; top: 16px; display: grid; gap: 20px; }
+
+  .card { background: var(--card); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+  .card-titulo { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+  .card h2 { margin: 0; font-size: 1.08rem; font-weight: 700; letter-spacing: -.01em; }
+  .contagem { background: var(--primary-soft); color: var(--primary-d); font-size: .78rem; font-weight: 700;
+              padding: 3px 10px; border-radius: 999px; }
+
+  .campos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .full { grid-column: 1 / -1; }
-  label { display: block; font-size: .85rem; color: var(--muted); margin-bottom: 4px; }
-  input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border);
-          border-radius: 8px; font-size: 1rem; font-family: inherit; background: #fff; color: var(--text); }
-  textarea { resize: vertical; min-height: 80px; }
-  input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary); border-color: transparent; }
+  label { display: block; font-size: .8rem; font-weight: 600; color: #334155; margin-bottom: 6px; }
+  input, select, textarea {
+    width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: .95rem; font-family: inherit; background: #f8fafc; color: var(--text);
+    transition: border-color .15s, background .15s, box-shadow .15s;
+  }
+  textarea { resize: vertical; min-height: 92px; }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(13,148,136,.12);
+  }
 
-  button { border: 0; border-radius: 8px; padding: 10px 16px; font-size: .95rem; cursor: pointer;
-           font-weight: 500; font-family: inherit; }
-  button:disabled { opacity: .6; cursor: default; }
-  .btn-primary { background: var(--primary); color: #fff; }
-  .btn-primary:hover { background: var(--primary-h); }
-  .btn-secondary { background: #e5e7eb; color: var(--text); }
-  .actions { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+  button {
+    border: 0; border-radius: 10px; padding: 11px 18px; font-size: .92rem; cursor: pointer;
+    font-weight: 600; font-family: inherit; transition: background .15s, transform .1s, opacity .15s;
+  }
+  button:active:not(:disabled) { transform: scale(.97); }
+  button:disabled { opacity: .55; cursor: default; }
+  .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 14px rgba(13,148,136,.3); }
+  .btn-primary:hover:not(:disabled) { background: var(--primary-d); }
+  .btn-secondary { background: #f1f5f9; color: var(--text); }
+  .btn-secondary:hover { background: #e2e8f0; }
+  .btn-danger { background: var(--aberto); color: #fff; }
+  .btn-danger:hover { background: #be123c; }
+  .btn-glass { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.2); padding: 9px 14px; }
+  .btn-glass:hover { background: rgba(255,255,255,.22); }
+  .acoes-form { margin-top: 18px; display: flex; gap: 8px; }
+  .acoes-form .btn-primary { flex: 1; }
 
-  .filtros { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  /* ===== Lista ===== */
+  .filtros { display: grid; grid-template-columns: 1fr 180px 160px; gap: 10px; margin-bottom: 18px; }
+  .busca-wrap { position: relative; }
+  .busca-wrap span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); opacity: .5; }
+  .busca-wrap input { padding-left: 36px; }
 
-  .lista { display: grid; gap: 12px; }
-  .item { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
-          border-left: 5px solid var(--aberto); }
-  .item.em-analise { border-left-color: var(--analise); }
-  .item.resolvido { border-left-color: var(--resolvido); }
-  .item-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
-  .tipo { font-weight: 600; font-size: 1.05rem; }
-  .local { color: var(--muted); font-size: .9rem; margin-top: 2px; }
-  .desc { margin: 10px 0; line-height: 1.45; white-space: pre-wrap; }
-  .meta { font-size: .8rem; color: var(--muted); }
-  .badge { font-size: .78rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .lista { display: grid; gap: 14px; }
+  .item {
+    border: 1.5px solid var(--border); border-radius: 14px; padding: 16px 18px; background: #fff;
+    position: relative; overflow: hidden; transition: box-shadow .2s, border-color .2s;
+  }
+  .item:hover { box-shadow: var(--shadow); border-color: #cbd5e1; }
+  .item::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--aberto); }
+  .item.em-analise::before { background: var(--analise); }
+  .item.resolvido::before { background: var(--resolvido); }
+
+  .item-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+  .item-tipo { display: flex; gap: 12px; align-items: center; }
+  .emoji { width: 42px; height: 42px; border-radius: 12px; background: #f1f5f9; display: grid; place-items: center; font-size: 21px; flex-shrink: 0; }
+  .tipo { font-weight: 700; font-size: 1rem; }
+  .local { color: var(--muted); font-size: .86rem; margin-top: 2px; }
+  .desc { margin: 12px 0 10px; line-height: 1.55; white-space: pre-wrap; color: #1e293b; font-size: .94rem; }
+  .meta { font-size: .78rem; color: var(--muted); }
+
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .badge { font-size: .74rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
   .badge.aberto { background: var(--aberto-bg); color: var(--aberto); }
   .badge.em-analise { background: var(--analise-bg); color: var(--analise); }
   .badge.resolvido { background: var(--resolvido-bg); color: var(--resolvido); }
-  .item-acoes { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
-  .btn-sm { padding: 6px 10px; font-size: .85rem; }
-  .btn-apoio { background: #e0f2fe; color: #0369a1; }
-  .btn-apoio.ja { background: #bae6fd; }
-  .btn-edit { background: #fef3c7; color: #92400e; }
-  .btn-del { background: #fee2e2; color: var(--aberto); }
-  .item-acoes select { width: auto; padding: 6px 8px; font-size: .85rem; }
-  .empty { text-align: center; color: var(--muted); padding: 30px; }
+  .badge.contestado { background: var(--down-bg); color: var(--down); }
+  .badge.pedido { background: #f1f5f9; color: #475569; }
 
-  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(120px);
-           background: var(--text); color: #fff; padding: 12px 18px; border-radius: 8px;
-           transition: transform .3s; z-index: 10; max-width: 90vw; }
-  .toast.show { transform: translateX(-50%) translateY(0); }
+  .item-acoes {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; padding-top: 14px;
+    border-top: 1px dashed var(--border); align-items: center;
+  }
+  .votos { display: flex; gap: 6px; }
+  .btn-sm { padding: 7px 12px; font-size: .82rem; border-radius: 9px; }
+  .btn-up { background: var(--up-bg); color: var(--up); }
+  .btn-up:hover:not(:disabled) { background: #bae6fd; }
+  .btn-down { background: var(--down-bg); color: var(--down); }
+  .btn-down:hover:not(:disabled) { background: #ddd6fe; }
+  .btn-up.marcado { background: var(--up); color: #fff; opacity: 1; }
+  .btn-down.marcado { background: var(--down); color: #fff; opacity: 1; }
+  .espaco { flex: 1; }
+  .btn-edit { background: #f1f5f9; color: #334155; }
+  .btn-edit:hover { background: #e2e8f0; }
+  .btn-del { background: var(--aberto-bg); color: var(--aberto); }
+  .btn-del:hover { background: #fecdd3; }
+  .btn-pedir { background: #fff7ed; color: #c2410c; }
+  .btn-pedir:hover:not(:disabled) { background: #ffedd5; }
+  .item-acoes select { width: auto; padding: 7px 10px; font-size: .82rem; border-radius: 9px; }
+
+  .empty { text-align: center; color: var(--muted); padding: 40px 16px; }
+  .empty .grande { font-size: 2.4rem; margin-bottom: 8px; }
+
+  /* ===== Solicitações (admin) ===== */
+  .solic { border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+  .solic:last-child { margin-bottom: 0; }
+  .solic .s-tit { font-weight: 700; font-size: .9rem; }
+  .solic .s-motivo { font-size: .86rem; margin: 6px 0; color: #334155; }
+  .solic .s-meta { font-size: .75rem; color: var(--muted); }
+  .solic .s-acoes { display: flex; gap: 6px; margin-top: 10px; }
+  .solic .s-acoes button { flex: 1; }
+
+  /* ===== Modais ===== */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(11,37,48,.55); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center; padding: 16px; z-index: 20;
+  }
+  .modal-bg.show { display: flex; animation: fade .2s; }
+  .modal { background: var(--card); border-radius: 18px; padding: 26px; width: 100%; max-width: 420px;
+           box-shadow: 0 20px 60px rgba(0,0,0,.25); animation: sobe .25s; }
+  .modal h2 { margin: 0 0 6px; font-size: 1.2rem; }
+  .modal .sub { color: var(--muted); font-size: .88rem; margin: 0 0 18px; }
+  .modal .campo { margin-bottom: 14px; }
+  .modal .erro { color: var(--aberto); font-size: .86rem; min-height: 1.2em; margin: 2px 0 0; }
+  .modal .acoes-form button { flex: 1; }
+  .alvo { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+          font-size: .86rem; margin-bottom: 14px; }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes sobe { from { transform: translateY(16px); opacity: 0; } }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(140px);
+    background: var(--dark); color: #fff; padding: 13px 20px; border-radius: 12px; font-weight: 500;
+    transition: transform .3s cubic-bezier(.2,.9,.3,1.2), opacity .3s; z-index: 30; max-width: 90vw;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2); opacity: 0; pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
   .toast.erro { background: var(--aberto); }
   .toast.ok { background: var(--resolvido); }
 
-  header .in { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .auth { display: flex; align-items: center; gap: 10px; font-size: .9rem; }
-  .btn-light { background: rgba(255,255,255,.18); color: #fff; }
-  .btn-light:hover { background: rgba(255,255,255,.3); }
-
-  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none;
-              align-items: center; justify-content: center; padding: 16px; z-index: 20; }
-  .modal-bg.show { display: flex; }
-  .modal { background: var(--card); border-radius: 12px; padding: 22px; width: 100%; max-width: 360px; }
-  .modal h2 { margin: 0 0 16px; font-size: 1.15rem; }
-  .modal .campo { margin-bottom: 12px; }
-  .modal .erro { color: var(--aberto); font-size: .88rem; min-height: 1.2em; margin: 4px 0 0; }
-
-  @media (max-width: 640px) {
+  @media (max-width: 1000px) {
+    .layout { grid-template-columns: 1fr; }
+    .coluna-esq { position: static; }
     .stats { grid-template-columns: repeat(2, 1fr); }
-    .grid, .filtros { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .campos, .filtros { grid-template-columns: 1fr; }
+    .item-top { flex-direction: column; }
+    .badges { justify-content: flex-start; }
+    .stat { padding: 14px; }
   }
 </style>
 </head>
 <body>
 <header>
-  <div class="in">
-    <div>
-      <h1>📍 Problemas Urbanos</h1>
-      <p>Registre e acompanhe problemas da sua cidade</p>
+  <div class="wrap topo">
+    <div class="marca">
+      <div class="logo">📍</div>
+      <div>
+        <h1>Problemas Urbanos</h1>
+        <p>Registre e acompanhe os problemas do seu bairro</p>
+      </div>
     </div>
     <div class="auth">
-      <span id="auth-info"></span>
-      <button class="btn-light btn-sm" id="btn-login">🔒 Entrar (administrador)</button>
-      <button class="btn-light btn-sm" id="btn-logout" hidden>Sair</button>
+      <span class="auth-info" id="auth-info"></span>
+      <button class="btn-glass btn-sm" id="btn-login">🔒 Área do administrador</button>
+      <button class="btn-glass btn-sm" id="btn-logout" hidden>Sair</button>
     </div>
   </div>
 </header>
 
-<div class="modal-bg" id="modal-login">
-  <form class="modal" id="form-login">
-    <h2>Acesso do administrador</h2>
-    <div class="campo">
-      <label for="login-email">E-mail</label>
-      <input id="login-email" type="email" required autocomplete="username">
-    </div>
-    <div class="campo">
-      <label for="login-senha">Senha</label>
-      <input id="login-senha" type="password" required autocomplete="current-password">
-    </div>
-    <p class="erro" id="login-erro"></p>
-    <div class="actions">
-      <button type="submit" class="btn-primary" id="btn-entrar">Entrar</button>
-      <button type="button" class="btn-secondary" id="btn-fechar-login">Cancelar</button>
-    </div>
-  </form>
-</div>
+<section class="stats">
+  <div class="stat total"><div class="ic">📋</div><div><div class="n" id="st-total">0</div><div class="l">Registros</div></div></div>
+  <div class="stat aberto"><div class="ic">🚨</div><div><div class="n" id="st-aberto">0</div><div class="l">Abertos</div></div></div>
+  <div class="stat analise"><div class="ic">🔎</div><div><div class="n" id="st-analise">0</div><div class="l">Em análise</div></div></div>
+  <div class="stat resolvido"><div class="ic">✅</div><div><div class="n" id="st-resolvido">0</div><div class="l">Resolvidos</div></div></div>
+</section>
 
-<div class="container">
-  <div class="stats">
-    <div class="stat"><div class="n" id="st-total">0</div><div class="l">Total</div></div>
-    <div class="stat aberto"><div class="n" id="st-aberto">0</div><div class="l">Abertos</div></div>
-    <div class="stat analise"><div class="n" id="st-analise">0</div><div class="l">Em análise</div></div>
-    <div class="stat resolvido"><div class="n" id="st-resolvido">0</div><div class="l">Resolvidos</div></div>
+<main class="layout">
+  <!-- Coluna esquerda: formulário + solicitações (admin) -->
+  <div class="coluna-esq">
+    <div class="card">
+      <div class="card-titulo"><h2 id="form-titulo">Registrar problema</h2></div>
+      <form id="form">
+        <input type="hidden" id="id">
+        <div class="campos">
+          <div class="full">
+            <label for="tipo">Tipo de problema *</label>
+            <select id="tipo" required><option value="">Selecione...</option></select>
+          </div>
+          <div class="full">
+            <label for="endereco">Endereço / referência *</label>
+            <input id="endereco" required placeholder="Rua das Flores, 120 — em frente à padaria">
+          </div>
+          <div>
+            <label for="bairro">Bairro *</label>
+            <input id="bairro" required placeholder="Centro">
+          </div>
+          <div>
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="aberto">Aberto</option>
+              <option value="em-analise">Em análise</option>
+              <option value="resolvido">Resolvido</option>
+            </select>
+          </div>
+          <div class="full">
+            <label for="descricao">Descrição *</label>
+            <textarea id="descricao" required placeholder="O que está acontecendo, há quanto tempo, se oferece risco..."></textarea>
+          </div>
+          <div class="full">
+            <label for="autor">Seu nome (opcional)</label>
+            <input id="autor" placeholder="Anônimo">
+          </div>
+        </div>
+        <div class="acoes-form">
+          <button type="submit" class="btn-primary" id="btn-salvar">Registrar problema</button>
+          <button type="button" class="btn-secondary" id="btn-cancelar" hidden>Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card" id="card-solic" hidden>
+      <div class="card-titulo">
+        <h2>Pedidos de exclusão</h2>
+        <span class="contagem" id="solic-qtd">0</span>
+      </div>
+      <div id="solic-lista"></div>
+    </div>
   </div>
 
-  <div class="card">
-    <h2 id="form-titulo">Registrar problema</h2>
-    <form id="form">
-      <input type="hidden" id="id">
-      <div class="grid">
-        <div>
-          <label for="tipo">Tipo de problema *</label>
-          <select id="tipo" required>
-            <option value="">Selecione...</option>
-          </select>
-        </div>
-        <div>
-          <label for="status">Status</label>
-          <select id="status">
-            <option value="aberto">Aberto</option>
-            <option value="em-analise">Em análise</option>
-            <option value="resolvido">Resolvido</option>
-          </select>
-        </div>
-        <div>
-          <label for="endereco">Endereço / referência *</label>
-          <input id="endereco" required placeholder="Ex.: Rua das Flores, 120 - em frente à padaria">
-        </div>
-        <div>
-          <label for="bairro">Bairro *</label>
-          <input id="bairro" required placeholder="Ex.: Centro">
-        </div>
-        <div class="full">
-          <label for="descricao">Descrição *</label>
-          <textarea id="descricao" required placeholder="Descreva o problema, há quanto tempo existe, riscos..."></textarea>
-        </div>
-        <div>
-          <label for="autor">Seu nome (opcional)</label>
-          <input id="autor" placeholder="Anônimo">
-        </div>
-      </div>
-      <div class="actions">
-        <button type="submit" class="btn-primary" id="btn-salvar">Registrar</button>
-        <button type="button" class="btn-secondary" id="btn-cancelar" hidden>Cancelar edição</button>
-      </div>
-    </form>
-  </div>
-
-  <div class="card">
-    <h2>Problemas registrados</h2>
+  <!-- Coluna direita: lista -->
+  <section class="card">
+    <div class="card-titulo">
+      <h2>Problemas registrados</h2>
+      <span class="contagem" id="lista-qtd">0</span>
+    </div>
     <div class="filtros">
-      <input id="busca" placeholder="Buscar por endereço, bairro ou descrição...">
+      <div class="busca-wrap"><span>🔍</span><input id="busca" placeholder="Buscar endereço, bairro ou descrição"></div>
       <select id="f-tipo"><option value="">Todos os tipos</option></select>
       <select id="f-status">
         <option value="">Todos os status</option>
@@ -197,7 +318,60 @@
       </select>
     </div>
     <div class="lista" id="lista"><div class="empty">Carregando...</div></div>
-  </div>
+  </section>
+</main>
+
+<!-- Modal: login -->
+<div class="modal-bg" id="modal-login">
+  <form class="modal" id="form-login">
+    <h2>Área do administrador</h2>
+    <p class="sub">Acesso restrito ao responsável pelo site.</p>
+    <div class="campo">
+      <label for="login-email">E-mail</label>
+      <input id="login-email" type="email" required autocomplete="username">
+    </div>
+    <div class="campo">
+      <label for="login-senha">Senha</label>
+      <input id="login-senha" type="password" required autocomplete="current-password">
+    </div>
+    <p class="erro" id="login-erro"></p>
+    <div class="acoes-form">
+      <button type="button" class="btn-secondary" data-fechar>Cancelar</button>
+      <button type="submit" class="btn-primary" id="btn-entrar">Entrar</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal: solicitar exclusão -->
+<div class="modal-bg" id="modal-pedido">
+  <form class="modal" id="form-pedido">
+    <h2>Solicitar exclusão</h2>
+    <p class="sub">O pedido será analisado pelo administrador do site.</p>
+    <div class="alvo" id="pedido-alvo"></div>
+    <div class="campo">
+      <label for="pedido-motivo">Motivo *</label>
+      <select id="pedido-motivo" required>
+        <option value="">Selecione...</option>
+        <option>Problema já foi resolvido</option>
+        <option>Informação falsa ou incorreta</option>
+        <option>Registro duplicado</option>
+        <option>Conteúdo ofensivo ou impróprio</option>
+        <option>Outro</option>
+      </select>
+    </div>
+    <div class="campo">
+      <label for="pedido-detalhe">Detalhes (opcional)</label>
+      <textarea id="pedido-detalhe" placeholder="Explique brevemente..."></textarea>
+    </div>
+    <div class="campo">
+      <label for="pedido-nome">Seu nome (opcional)</label>
+      <input id="pedido-nome" placeholder="Anônimo">
+    </div>
+    <div class="acoes-form">
+      <button type="button" class="btn-secondary" data-fechar>Cancelar</button>
+      <button type="submit" class="btn-primary" id="btn-enviar-pedido">Enviar solicitação</button>
+    </div>
+  </form>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -206,7 +380,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
     getFirestore, collection, addDoc, updateDoc, deleteDoc, doc,
-    onSnapshot, query, orderBy, serverTimestamp, increment
+    onSnapshot, query, orderBy, where, serverTimestamp, increment
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import {
     getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
@@ -223,23 +397,24 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  const colecao = collection(db, "problemas");
   const auth = getAuth(app);
+  const colProblemas = collection(db, "problemas");
+  const colSolic = collection(db, "solicitacoes_exclusao");
 
-  // Único usuário com permissão de exclusão (a senha fica só no Firebase Auth)
+  // Único usuário administrador (a senha fica só no Firebase Authentication)
   const ADMIN_EMAIL = "ldacruz91@gmail.com";
   let ehAdmin = false;
 
   const TIPOS = {
-    buraco: "🕳️ Buraco na via",
-    iluminacao: "💡 Iluminação pública",
-    lixo: "🗑️ Lixo / entulho",
-    esgoto: "🚰 Esgoto / vazamento",
-    calcada: "🚶 Calçada danificada",
-    sinalizacao: "🚦 Sinalização",
-    arvore: "🌳 Árvore / poda",
-    alagamento: "🌧️ Alagamento",
-    outro: "📌 Outro"
+    buraco:      ["🕳️", "Buraco na via"],
+    iluminacao:  ["💡", "Iluminação pública"],
+    lixo:        ["🗑️", "Lixo / entulho"],
+    esgoto:      ["🚰", "Esgoto / vazamento"],
+    calcada:     ["🚶", "Calçada danificada"],
+    sinalizacao: ["🚦", "Sinalização"],
+    arvore:      ["🌳", "Árvore / poda"],
+    alagamento:  ["🌧️", "Alagamento"],
+    outro:       ["📌", "Outro"]
   };
   const STATUS = { "aberto": "Aberto", "em-analise": "Em análise", "resolvido": "Resolvido" };
 
@@ -249,25 +424,27 @@
   const btnSalvar = $("btn-salvar"), btnCancelar = $("btn-cancelar"), formTitulo = $("form-titulo");
   const lista = $("lista"), busca = $("busca"), fTipo = $("f-tipo"), fStatus = $("f-status");
 
-  // Preenche selects de tipo
-  for (const [v, t] of Object.entries(TIPOS)) {
-    $("tipo").add(new Option(t, v));
-    fTipo.add(new Option(t, v));
+  for (const [v, [ic, nome]] of Object.entries(TIPOS)) {
+    $("tipo").add(new Option(`${ic}  ${nome}`, v));
+    fTipo.add(new Option(nome, v));
   }
 
-  // Apoios já dados neste navegador (evita apoiar duas vezes)
-  let apoiados = new Set();
-  try { apoiados = new Set(JSON.parse(localStorage.getItem("apoiados") || "[]")); } catch {}
-  const salvarApoiados = () => { try { localStorage.setItem("apoiados", JSON.stringify([...apoiados])); } catch {} };
+  // ===== Memória local (um voto e um pedido por navegador) =====
+  const lerLocal = (k, padrao) => { try { return JSON.parse(localStorage.getItem(k)) ?? padrao; } catch { return padrao; } };
+  const gravarLocal = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+  const votos = lerLocal("votos", {});              // { idProblema: "up" | "down" }
+  const pedidos = new Set(lerLocal("pedidos", []));  // ids com exclusão já solicitada aqui
 
   let problemas = [];
+  let solicitacoes = [];
+  let pararSolic = null;
 
   function toast(msg, tipo = "") {
     const t = $("toast");
     t.textContent = msg;
     t.className = "toast show " + tipo;
     clearTimeout(t._timer);
-    t._timer = setTimeout(() => t.className = "toast", 2800);
+    t._timer = setTimeout(() => t.className = "toast", 3200);
   }
 
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c =>
@@ -277,8 +454,8 @@
     ? ts.toDate().toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })
     : "agora";
 
-  // READ — tempo real
-  onSnapshot(query(colecao, orderBy("criadoEm", "desc")), (snap) => {
+  // ===== READ — problemas em tempo real =====
+  onSnapshot(query(colProblemas, orderBy("criadoEm", "desc")), (snap) => {
     problemas = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderizar();
   }, (erro) => {
@@ -299,42 +476,66 @@
       (!fStatus.value || p.status === fStatus.value) &&
       [p.endereco, p.bairro, p.descricao].some(v => (v || "").toLowerCase().includes(termo)));
 
+    $("lista-qtd").textContent = filtrados.length;
+
     if (!filtrados.length) {
-      lista.innerHTML = `<div class="empty">${problemas.length ? "Nenhum problema encontrado com esses filtros." : "Nenhum problema registrado ainda."}</div>`;
+      lista.innerHTML = `<div class="empty"><div class="grande">${problemas.length ? "🔍" : "🏙️"}</div>
+        ${problemas.length ? "Nenhum problema encontrado com esses filtros." : "Nenhum problema registrado ainda.<br>Seja o primeiro a registrar!"}</div>`;
       return;
     }
 
     lista.innerHTML = filtrados.map(p => {
       const st = STATUS[p.status] ? p.status : "aberto";
-      const ja = apoiados.has(p.id);
+      const [ic, nomeTipo] = TIPOS[p.tipo] || ["📌", p.tipo];
+      const meuVoto = votos[p.id];
+      const up = p.apoios || 0, down = p.contestacoes || 0;
+      const contestado = down >= 3 && down > up;
+      const pedi = pedidos.has(p.id);
+
+      const botaoExcluir = ehAdmin
+        ? `<button class="btn-sm btn-del" data-acao="excluir" data-id="${p.id}">🗑️ Excluir</button>`
+        : `<button class="btn-sm btn-pedir" data-acao="pedir" data-id="${p.id}" ${pedi ? "disabled" : ""}>
+             ${pedi ? "✔ Exclusão solicitada" : "🚩 Solicitar exclusão"}</button>`;
+
       return `
-      <div class="item ${st}">
+      <article class="item ${st}">
         <div class="item-top">
-          <div>
-            <div class="tipo">${esc(TIPOS[p.tipo] || p.tipo)}</div>
-            <div class="local">📍 ${esc(p.endereco)} — ${esc(p.bairro)}</div>
+          <div class="item-tipo">
+            <div class="emoji">${ic}</div>
+            <div>
+              <div class="tipo">${esc(nomeTipo)}</div>
+              <div class="local">📍 ${esc(p.endereco)} · ${esc(p.bairro)}</div>
+            </div>
           </div>
-          <span class="badge ${st}">${STATUS[st]}</span>
+          <div class="badges">
+            ${contestado ? `<span class="badge contestado">⚠️ Contestado</span>` : ""}
+            ${p.exclusaoSolicitada ? `<span class="badge pedido">🕓 Exclusão solicitada</span>` : ""}
+            <span class="badge ${st}">${STATUS[st]}</span>
+          </div>
         </div>
         <div class="desc">${esc(p.descricao)}</div>
-        <div class="meta">Registrado por ${esc(p.autor || "Anônimo")} em ${fmtData(p.criadoEm)}${p.atualizadoEm ? " · atualizado em " + fmtData(p.atualizadoEm) : ""}</div>
+        <div class="meta">Por ${esc(p.autor || "Anônimo")} em ${fmtData(p.criadoEm)}${p.atualizadoEm ? " · atualizado em " + fmtData(p.atualizadoEm) : ""}</div>
         <div class="item-acoes">
-          <button class="btn-sm btn-apoio ${ja ? "ja" : ""}" data-acao="apoiar" data-id="${p.id}" ${ja ? "disabled" : ""}>
-            👍 ${ja ? "Você confirmou" : "Também vi isso"} (${p.apoios || 0})
-          </button>
+          <div class="votos">
+            <button class="btn-sm btn-up ${meuVoto === "up" ? "marcado" : ""}" data-acao="up" data-id="${p.id}"
+              title="Eu também vi esse problema" ${meuVoto ? "disabled" : ""}>👍 Também vi · ${up}</button>
+            <button class="btn-sm btn-down ${meuVoto === "down" ? "marcado" : ""}" data-acao="down" data-id="${p.id}"
+              title="Moro perto e não vi esse problema" ${meuVoto ? "disabled" : ""}>👎 Não vi · ${down}</button>
+          </div>
+          <span class="espaco"></span>
           <select data-acao="status" data-id="${p.id}" title="Alterar status">
             ${Object.entries(STATUS).map(([v, t]) => `<option value="${v}" ${v === st ? "selected" : ""}>${t}</option>`).join("")}
           </select>
-          <button class="btn-sm btn-edit" data-acao="editar" data-id="${p.id}">Editar</button>
-          ${ehAdmin ? `<button class="btn-sm btn-del" data-acao="excluir" data-id="${p.id}">Excluir</button>` : ""}
+          <button class="btn-sm btn-edit" data-acao="editar" data-id="${p.id}">✏️ Editar</button>
+          ${botaoExcluir}
         </div>
-      </div>`;
+      </article>`;
     }).join("");
   }
 
   [busca, fTipo, fStatus].forEach(el => el.addEventListener("input", renderizar));
 
-  // CREATE / UPDATE
+  // ===== CREATE / UPDATE =====
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const dados = Object.fromEntries(campos.map(c => [c, $(c).value.trim()]));
@@ -347,7 +548,7 @@
         await updateDoc(doc(db, "problemas", campoId.value), { ...dados, atualizadoEm: serverTimestamp() });
         toast("Problema atualizado!", "ok");
       } else {
-        await addDoc(colecao, { ...dados, apoios: 0, criadoEm: serverTimestamp() });
+        await addDoc(colProblemas, { ...dados, apoios: 0, contestacoes: 0, exclusaoSolicitada: false, criadoEm: serverTimestamp() });
         toast("Problema registrado. Obrigado!", "ok");
       }
       limparForm();
@@ -359,37 +560,43 @@
     }
   });
 
-  // Ações nos cards
+  // ===== Ações nos cards =====
   lista.addEventListener("click", async (e) => {
     const btn = e.target.closest("button[data-acao]");
     if (!btn) return;
     const p = problemas.find(x => x.id === btn.dataset.id);
     if (!p) return;
+    const acao = btn.dataset.acao;
 
-    if (btn.dataset.acao === "editar") {
+    if (acao === "editar") {
       campoId.value = p.id;
       campos.forEach(c => $(c).value = p[c] || "");
       formTitulo.textContent = "Editar problema";
       btnSalvar.textContent = "Salvar alterações";
       btnCancelar.hidden = false;
       window.scrollTo({ top: 0, behavior: "smooth" });
+      $("descricao").focus({ preventScroll: true });
     }
 
-    if (btn.dataset.acao === "apoiar") {
+    if (acao === "up" || acao === "down") {
+      if (votos[p.id]) return;
       btn.disabled = true;
       try {
-        await updateDoc(doc(db, "problemas", p.id), { apoios: increment(1) });
-        apoiados.add(p.id); salvarApoiados();
+        await updateDoc(doc(db, "problemas", p.id),
+          acao === "up" ? { apoios: increment(1) } : { contestacoes: increment(1) });
+        votos[p.id] = acao; gravarLocal("votos", votos);
         renderizar();
-        toast("Confirmação registrada!", "ok");
+        toast(acao === "up" ? "Obrigado por confirmar!" : "Obrigado! Sua contestação foi registrada.", "ok");
       } catch (erro) {
         btn.disabled = false;
         toast("Erro: " + erro.message, "erro");
       }
     }
 
-    // DELETE
-    if (btn.dataset.acao === "excluir") {
+    if (acao === "pedir") abrirPedido(p);
+
+    // DELETE (somente admin)
+    if (acao === "excluir") {
       if (!ehAdmin) return toast("Apenas o administrador pode excluir.", "erro");
       if (!confirm(`Excluir o registro em "${p.endereco}"?`)) return;
       try {
@@ -402,7 +609,7 @@
     }
   });
 
-  // Alteração rápida de status (UPDATE)
+  // Troca rápida de status
   lista.addEventListener("change", async (e) => {
     const sel = e.target.closest("select[data-acao='status']");
     if (!sel) return;
@@ -416,27 +623,150 @@
 
   btnCancelar.addEventListener("click", limparForm);
 
-  // ===== Login do administrador =====
-  const modal = $("modal-login"), loginErro = $("login-erro"), btnEntrar = $("btn-entrar");
-  const abrirLogin = () => { loginErro.textContent = ""; $("form-login").reset(); modal.classList.add("show"); $("login-email").focus(); };
-  const fecharLogin = () => modal.classList.remove("show");
+  function limparForm() {
+    form.reset();
+    campoId.value = "";
+    formTitulo.textContent = "Registrar problema";
+    btnSalvar.textContent = "Registrar problema";
+    btnCancelar.hidden = true;
+  }
 
-  $("btn-login").addEventListener("click", abrirLogin);
-  $("btn-fechar-login").addEventListener("click", fecharLogin);
-  modal.addEventListener("click", (e) => { if (e.target === modal) fecharLogin(); });
+  // ===== Modais =====
+  const abrir = (m) => m.classList.add("show");
+  const fechar = (m) => m.classList.remove("show");
+  document.querySelectorAll(".modal-bg").forEach(m => {
+    m.addEventListener("click", (e) => { if (e.target === m || e.target.closest("[data-fechar]")) fechar(m); });
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") document.querySelectorAll(".modal-bg.show").forEach(fechar);
+  });
+
+  // ===== Solicitação de exclusão (usuários comuns) =====
+  const modalPedido = $("modal-pedido");
+  let alvoPedido = null;
+
+  function abrirPedido(p) {
+    alvoPedido = p;
+    $("form-pedido").reset();
+    const [ic, nome] = TIPOS[p.tipo] || ["📌", p.tipo];
+    $("pedido-alvo").innerHTML = `<strong>${ic} ${esc(nome)}</strong><br>📍 ${esc(p.endereco)} · ${esc(p.bairro)}`;
+    abrir(modalPedido);
+    $("pedido-motivo").focus();
+  }
+
+  $("form-pedido").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!alvoPedido) return;
+    const motivo = $("pedido-motivo").value;
+    if (!motivo) return toast("Selecione o motivo.", "erro");
+
+    const btn = $("btn-enviar-pedido");
+    btn.disabled = true;
+    try {
+      await addDoc(colSolic, {
+        problemaId: alvoPedido.id,
+        tipo: alvoPedido.tipo || "",
+        endereco: alvoPedido.endereco || "",
+        bairro: alvoPedido.bairro || "",
+        motivo,
+        detalhe: $("pedido-detalhe").value.trim(),
+        solicitante: $("pedido-nome").value.trim() || "Anônimo",
+        status: "pendente",
+        criadoEm: serverTimestamp()
+      });
+      await updateDoc(doc(db, "problemas", alvoPedido.id), { exclusaoSolicitada: true });
+      pedidos.add(alvoPedido.id); gravarLocal("pedidos", [...pedidos]);
+      fechar(modalPedido);
+      renderizar();
+      toast("✅ Solicitação de exclusão enviada! O administrador vai analisar.", "ok");
+    } catch (erro) {
+      console.error(erro);
+      toast("Erro ao enviar solicitação: " + erro.message, "erro");
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // ===== Painel de solicitações (somente admin) =====
+  function ouvirSolicitacoes() {
+    pararSolic = onSnapshot(
+      query(colSolic, where("status", "==", "pendente")),
+      (snap) => {
+        solicitacoes = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (b.criadoEm?.seconds || 0) - (a.criadoEm?.seconds || 0));
+        renderizarSolic();
+      },
+      (erro) => { console.error(erro); toast("Erro ao ler solicitações: " + erro.message, "erro"); }
+    );
+  }
+
+  function renderizarSolic() {
+    $("solic-qtd").textContent = solicitacoes.length;
+    $("solic-lista").innerHTML = solicitacoes.length
+      ? solicitacoes.map(s => {
+          const [ic, nome] = TIPOS[s.tipo] || ["📌", s.tipo];
+          return `
+          <div class="solic">
+            <div class="s-tit">${ic} ${esc(nome)} — ${esc(s.endereco)}</div>
+            <div class="s-motivo"><strong>${esc(s.motivo)}</strong>${s.detalhe ? ": " + esc(s.detalhe) : ""}</div>
+            <div class="s-meta">Por ${esc(s.solicitante)} em ${fmtData(s.criadoEm)}</div>
+            <div class="s-acoes">
+              <button class="btn-sm btn-danger" data-sacao="aprovar" data-id="${s.id}">Aprovar e excluir</button>
+              <button class="btn-sm btn-secondary" data-sacao="recusar" data-id="${s.id}">Recusar</button>
+            </div>
+          </div>`;
+        }).join("")
+      : `<div class="empty" style="padding:16px">Nenhum pedido pendente. 🎉</div>`;
+  }
+
+  $("solic-lista").addEventListener("click", async (e) => {
+    const btn = e.target.closest("button[data-sacao]");
+    if (!btn || !ehAdmin) return;
+    const s = solicitacoes.find(x => x.id === btn.dataset.id);
+    if (!s) return;
+    btn.disabled = true;
+    try {
+      if (btn.dataset.sacao === "aprovar") {
+        if (!confirm(`Excluir definitivamente o registro em "${s.endereco}"?`)) { btn.disabled = false; return; }
+        await deleteDoc(doc(db, "problemas", s.problemaId)).catch(() => {});
+        // Fecha todos os pedidos pendentes do mesmo problema
+        await Promise.all(solicitacoes.filter(x => x.problemaId === s.problemaId).map(x =>
+          updateDoc(doc(db, "solicitacoes_exclusao", x.id), { status: "aprovada", analisadoEm: serverTimestamp() })));
+        toast("Pedido aprovado e registro excluído.", "ok");
+      } else {
+        await updateDoc(doc(db, "solicitacoes_exclusao", s.id), { status: "recusada", analisadoEm: serverTimestamp() });
+        const aindaPendente = solicitacoes.some(x => x.problemaId === s.problemaId && x.id !== s.id);
+        if (!aindaPendente && problemas.some(p => p.id === s.problemaId))
+          await updateDoc(doc(db, "problemas", s.problemaId), { exclusaoSolicitada: false });
+        toast("Pedido recusado.");
+      }
+    } catch (erro) {
+      btn.disabled = false;
+      toast("Erro: " + erro.message, "erro");
+    }
+  });
+
+  // ===== Login do administrador =====
+  const modalLogin = $("modal-login"), loginErro = $("login-erro"), btnEntrar = $("btn-entrar");
+
+  $("btn-login").addEventListener("click", () => {
+    loginErro.textContent = "";
+    $("form-login").reset();
+    abrir(modalLogin);
+    $("login-email").focus();
+  });
 
   $("form-login").addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = $("login-email").value.trim().toLowerCase();
     const senha = $("login-senha").value;
     loginErro.textContent = "";
-
     if (email !== ADMIN_EMAIL) { loginErro.textContent = "Acesso negado."; return; }
 
     btnEntrar.disabled = true;
     try {
       await signInWithEmailAndPassword(auth, email, senha);
-      fecharLogin();
+      fechar(modalLogin);
       toast("Bem-vindo, administrador!", "ok");
     } catch (erro) {
       console.error(erro);
@@ -448,29 +778,21 @@
 
   $("btn-logout").addEventListener("click", async () => {
     await signOut(auth);
-    toast("Você saiu.");
+    toast("Você saiu da área do administrador.");
   });
 
   onAuthStateChanged(auth, async (user) => {
-    // Qualquer conta diferente do administrador é desconectada na hora
-    if (user && user.email?.toLowerCase() !== ADMIN_EMAIL) {
-      await signOut(auth);
-      return;
-    }
+    if (user && user.email?.toLowerCase() !== ADMIN_EMAIL) { await signOut(auth); return; }
     ehAdmin = !!user;
     $("btn-login").hidden = ehAdmin;
     $("btn-logout").hidden = !ehAdmin;
     $("auth-info").textContent = ehAdmin ? "👤 " + user.email : "";
+    $("card-solic").hidden = !ehAdmin;
+
+    if (ehAdmin && !pararSolic) ouvirSolicitacoes();
+    if (!ehAdmin && pararSolic) { pararSolic(); pararSolic = null; solicitacoes = []; }
     renderizar();
   });
-
-  function limparForm() {
-    form.reset();
-    campoId.value = "";
-    formTitulo.textContent = "Registrar problema";
-    btnSalvar.textContent = "Registrar";
-    btnCancelar.hidden = true;
-  }
 </script>
 </body>
 </html>
